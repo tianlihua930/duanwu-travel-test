@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>端午旅行测一测 · 精细版</title>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Nunito:wght@700;800;900&family=Quicksand:wght@500;700&display=swap');
+:root{
+  --bg1:#FFFDF4;
+  --bg2:#F7FFF5;
+  --bg3:#FFF8FB;
+  --green:#6AA66E;
+  --green-deep:#4D7D57;
+  --mint:#E8F5E9;
+  --mint-2:#F3FFF2;
+  --cream:#FFFDF8;
+  --yellow:#FFF9C4;
+  --orange:#FFB74D;
+  --orange-deep:#F6A73A;
+  --pink:#F48FB1;
+  --pink-soft:#FFF0F5;
+  --text:#59685C;
+  --text-deep:#48614A;
+  --line:rgba(106,166,110,.16);
+  --shadow:0 10px 20px rgba(0,0,0,.05), 0 6px 6px rgba(0,0,0,.03);
+  --shadow-hover:0 14px 26px rgba(0,0,0,.07), 0 8px 10px rgba(0,0,0,.04);
+  --radius-xl:30px;
+  --radius-lg:26px;
+  --radius-md:22px;
+  --radius-pill:999px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{
+  margin:0;
+  min-height:100%;
+  background:
+    radial-gradient(circle at 18px 18px, rgba(244,143,177,.12) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50px 36px, rgba(255,183,77,.13) 0 1.8px, transparent 2px),
+    radial-gradient(circle at 90px 20px, rgba(106,166,110,.12) 0 2px, transparent 2.2px),
+    linear-gradient(180deg,#FFFDF3 0%,#F7FFF5 42%,#FFF9FC 100%);
+  background-size:120px 120px,120px 120px,120px 120px,auto;
+  font-family:'Nunito','Quicksand','Comic Neue','PingFang SC','Microsoft YaHei',sans-serif;
+  color:var(--text-deep);
+}
+body{display:flex;justify-content:center}
+.app{
+  width:100%;max-width:430px;min-height:100vh;position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255,255,255,.8) 0 36px, transparent 37px),
+    radial-gradient(circle at 83% 16%, rgba(255,255,255,.7) 0 28px, transparent 29px),
+    radial-gradient(circle at 75% 60%, rgba(255,249,196,.35) 0 120px, transparent 121px),
+    radial-gradient(circle at 8% 85%, rgba(244,143,177,.14) 0 90px, transparent 91px),
+    linear-gradient(180deg,#FFFDF4 0%,#F6FFF6 44%,#FFF9FB 100%);
+}
+.app::before,
+.app::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.25
+}
+.app::before{
+  background-image:
+    radial-gradient(circle, rgba(255,183,77,.35) 0 1px, transparent 1.5px),
+    radial-gradient(circle, rgba(244,143,177,.35) 0 1px, transparent 1.5px);
+  background-size:26px 26px, 32px 32px;
+  background-position:0 0, 14px 14px;
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.4),transparent 28%,transparent 74%,rgba(0,0,0,.25));
+}
+.app::after{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110' viewBox='0 0 110 110'%3E%3Cg opacity='0.12'%3E%3Cpath d='M18 30c7-14 30-14 37 0 7 14-3 30-18 42C23 60 11 44 18 30Z' fill='none' stroke='%236AA66E' stroke-width='2.5'/%3E%3Cpath d='M59 72c8-12 24-12 32 0 6 10-1 22-12 31-11-9-26-21-20-31Z' fill='none' stroke='%23F48FB1' stroke-width='2.5'/%3E%3Cpath d='M69 28c3 0 5 3 5 6 0 4-2 6-5 8-3-2-5-4-5-8 0-3 2-6 5-6Z' fill='none' stroke='%23FFB74D' stroke-width='2.5'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:110px 110px;
+  mix-blend-mode:multiply;
+}
+.page{display:none;min-height:100vh;padding:14px 14px 34px;position:relative}
+.page.active{display:block}
+.topbar{
+  height:64px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,253,248,.92);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.75);border-radius:var(--radius-xl);box-shadow:var(--shadow);
+  position:relative;z-index:2;
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;color:var(--green-deep);font-size:19px;letter-spacing:.2px}
+.logo{width:40px;height:40px;position:relative;display:grid;place-items:center;flex:0 0 40px}
+.logo:before{
+  content:"";position:absolute;inset:4px;
+  background:linear-gradient(135deg,#FFF6DB 0 43%, #7BC67A 43% 74%, #5FA96A 74%);
+  border-radius:13px 13px 16px 13px;transform:rotate(45deg);
+  box-shadow:0 6px 10px rgba(106,166,110,.18);
+}
+.logo:after{content:"^_^";position:absolute;font-size:8px;font-weight:900;color:#50705a;transform:translateY(-1px)}
+.icons{display:flex;gap:12px;align-items:center}
+.search{width:38px;height:38px;border:2.5px solid var(--green);border-radius:50%;position:relative;background:#fffdfa}
+.search:after{content:"";position:absolute;right:4px;bottom:6px;width:11px;height:2.5px;background:var(--green);transform:rotate(45deg);border-radius:10px}
+.menu{width:28px;height:21px;display:flex;flex-direction:column;justify-content:space-between}
+.menu i{display:block;height:3.5px;background:var(--green);border-radius:999px}
+.kicker{
+  display:inline-flex;align-items:center;gap:6px;padding:8px 13px;background:linear-gradient(180deg,#fffef7,#f5fff4);
+  color:var(--green-deep);border:1px solid var(--line);border-radius:var(--radius-pill);font-size:13px;font-weight:900;
+  box-shadow:0 4px 10px rgba(106,166,110,.08)
+}
+.kicker::before{content:"🍙";font-size:13px}
+.cloud,.cloud2{position:absolute;background:rgba(255,255,255,.72);border-radius:var(--radius-pill);filter:blur(.5px);box-shadow:var(--shadow)}
+.cloud{width:210px;height:74px;left:-44px;top:92px}.cloud2{width:150px;height:62px;right:-14px;top:130px}
+.leaf{position:absolute;width:24px;height:12px;background:linear-gradient(90deg,#9DD89D,#CDE98D);border-radius:100% 0 100% 0;opacity:.75}
+.leaf.a{left:8px;top:150px;transform:rotate(-32deg)}.leaf.b{right:10px;top:360px;transform:rotate(30deg)}.leaf.c{left:6px;bottom:44px;transform:rotate(22deg)}
+.heroCard,.card,.resultCard{
+  background:rgba(255,253,248,.88);border:1px solid rgba(255,255,255,.82);
+  border-radius:32px;box-shadow:var(--shadow);position:relative;z-index:1;
+}
+.heroCard,.card,.resultCard{overflow:hidden}
+.heroCard::after,.card::after,.resultCard::after{
+  content:"☁️";position:absolute;right:16px;top:14px;font-size:18px;opacity:.35;pointer-events:none
+}
+.heroCard{padding:22px 17px 20px;margin-top:16px}
+.heroCard:before,
+.card:before,
+.resultCard:before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 95% 10%, rgba(255,249,196,.7) 0 18px, transparent 18px),
+    radial-gradient(circle at 88% 18%, rgba(244,143,177,.28) 0 10px, transparent 10px);
+}
+h1{
+  margin:12px 0 8px;font-size:42px;line-height:1.03;letter-spacing:-1.5px;color:var(--green-deep);font-weight:900;
+  text-shadow:0 1px 0 rgba(255,255,255,.55)
+}
+.blk{display:block;color:#5D725F}
+.sub{font-size:16px;line-height:1.68;color:var(--text);font-weight:800;margin:0}
+.sub strong{color:#7AAE62}
+.heroLayout{display:grid;grid-template-columns:1.05fr .95fr;gap:8px;align-items:end;margin-top:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{
+  padding:8px 12px;border-radius:var(--radius-pill);background:rgba(255,255,255,.95);
+  color:var(--green-deep);font-size:12px;font-weight:900;border:1px solid var(--line);box-shadow:0 5px 10px rgba(0,0,0,.03)
+}
+.cta{margin-top:16px}
+.btnPrimary,.btnSecondary,.btnGhost,.btnMini,.regionBtn,.optionBtn,.actionBtn,.feature,.cityMini,.bonus,.topbar{transition:transform .2s ease, box-shadow .2s ease, background-color .2s ease, filter .2s ease}
+.btnPrimary,.btnSecondary,.btnGhost,.btnMini,.actionBtn{font-family:inherit;font-weight:900}
+.btnPrimary,.btnSecondary,.btnGhost,.btnMini,.regionBtn,.optionBtn,.actionBtn{cursor:pointer}
+.btnPrimary:hover,.btnSecondary:hover,.btnGhost:hover,.btnMini:hover,.actionBtn:hover,.regionBtn:hover,.optionBtn:hover,.feature:hover,.cityMini:hover,.topbar:hover,.bonus:hover{
+  transform:scale(1.02);box-shadow:var(--shadow-hover);filter:saturate(1.03)
+}
+.btnPrimary:active,.btnSecondary:active,.btnGhost:active,.btnMini:active,.actionBtn:active,.regionBtn:active,.optionBtn:active{
+  transform:translateY(1px) scale(.985)
+}
+.btnPrimary{
+  width:100%;border:0;border-radius:28px;padding:17px 18px 17px 58px;
+  background:linear-gradient(180deg,#FFC46F,#FFB74D 60%,#F7A53C 100%);
+  color:#fff;font-size:27px;display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 12px 24px rgba(255,183,77,.25), 0 6px 8px rgba(0,0,0,.03);position:relative;
+}
+.btnPrimary::before{content:"😋";position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:24px}
+.btnPrimary span{width:42px;height:42px;background:rgba(255,255,255,.96);color:var(--orange-deep);border-radius:50%;display:grid;place-items:center;font-size:28px;box-shadow:0 6px 12px rgba(255,183,77,.2)}
+.btnSecondary{
+  width:100%;margin-top:12px;border-radius:24px;border:2px solid rgba(106,166,110,.22);background:linear-gradient(180deg,#fffef8,#fff);
+  color:var(--green-deep);padding:14px 16px 14px 52px;font-size:18px;position:relative;box-shadow:var(--shadow)
+}
+.btnSecondary::before{content:"🐲";position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:22px}
+.illustration{position:relative;height:250px}
+.badge{
+  position:absolute;right:0;top:16px;background:linear-gradient(180deg,#F9A1C0,#F48FB1);color:#fff;border-radius:20px 20px 8px 20px;
+  padding:9px 11px;font-size:15px;font-weight:900;box-shadow:0 10px 20px rgba(244,143,177,.18)
+}
+.sun{position:absolute;left:10px;top:6px;width:40px;height:40px;border-radius:50%;box-shadow:inset 0 0 0 6px var(--yellow),0 0 0 8px rgba(255,249,196,.65)}
+.plane{position:absolute;right:42px;top:5px;font-size:24px;transform:rotate(10deg)}
+.balloon{position:absolute;right:6px;top:32px;width:28px;height:36px;border-radius:50% 50% 46% 46%;background:linear-gradient(90deg,#fff 0 20%,#FFD08A 20% 40%,#fff 40% 60%,#FFAED0 60% 80%,#fff 80%);box-shadow:0 6px 10px rgba(0,0,0,.06)}
+.balloon:after{content:"";position:absolute;left:10px;bottom:-8px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:8px solid #d2ad68}
+.mountain{position:absolute;right:-8px;bottom:88px;width:170px;height:110px;clip-path:polygon(25% 15%,43% 0,58% 18%,73% 8%,100% 34%,100% 100%,0 100%,0 60%);background:linear-gradient(180deg,#d8f0bb,#a5d89f 65%,#8dd8d1 66%,#c3f0fb 100%)}
+.sea{position:absolute;left:-10px;right:-10px;bottom:0;height:116px;background:linear-gradient(180deg,#c7f1ff,#9fe4fb 45%,#7ad8f2);border-radius:42px 42px 0 0}
+.sea:before,.sea:after{content:"";position:absolute;left:0;right:0;height:26px;background:radial-gradient(ellipse at 18% 70%,rgba(255,255,255,.9) 0 18%,transparent 19%),radial-gradient(ellipse at 45% 35%,rgba(255,255,255,.75) 0 16%,transparent 17%),radial-gradient(ellipse at 76% 60%,rgba(255,255,255,.8) 0 15%,transparent 16%)}
+.sea:before{top:16px}.sea:after{top:48px;opacity:.6}
+.boatBody{position:absolute;left:76px;right:8px;bottom:18px;height:52px;background:linear-gradient(180deg,#FFCC87,#FFB95A 45%,#F7A742);border-radius:16px 16px 28px 34px;transform:skewX(-12deg);box-shadow:0 12px 18px rgba(255,183,77,.2)}
+.dragon{position:absolute;left:28px;bottom:52px;width:98px;height:72px;background:linear-gradient(145deg,#91D691 0 52%,#FFF1AA 52% 68%,#FFB374 68%);border-radius:40% 56% 48% 44%;transform:rotate(-6deg)}
+.dragon:before{content:"";position:absolute;left:40px;top:16px;width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid #6c806f;box-shadow:28px 2px 0 -1px #fff,28px 2px 0 2px #6c806f}
+.dragon:after{content:"";position:absolute;right:-18px;top:38px;width:46px;height:20px;border-radius:0 0 18px 18px;background:#fff;border:4px solid #f3a164;border-top:0}
+.horns{position:absolute;left:98px;bottom:109px;width:36px;height:12px;background:#FFD785;border-radius:12px;transform:rotate(-18deg);box-shadow:15px 8px 0 #FFD785}
+.neck{position:absolute;left:38px;bottom:32px;width:58px;height:84px;background:linear-gradient(180deg,#89CF90,#AEE39B);border-radius:50% 42% 22% 24%;transform:rotate(-8deg)}
+.zong{position:absolute;width:48px;height:48px;background:linear-gradient(135deg,#FFF6DA 0 44%,#8FD38B 44% 74%,#73BA74 74%);border-radius:16px 16px 18px 16px;box-shadow:0 8px 12px rgba(0,0,0,.08)}
+.zong:before{content:"";position:absolute;left:8px;right:8px;top:18px;height:3px;background:rgba(106,166,110,.25);transform:rotate(-25deg)}
+.zong .f{position:absolute;left:10px;right:10px;top:12px;font-size:10px;font-weight:900;color:#60755f;text-align:center}
+.z1{left:120px;bottom:54px}.z2{left:170px;bottom:48px;transform:scale(.92)}.z3{left:210px;bottom:44px;transform:scale(.82)}
+.flag{position:absolute;right:6px;bottom:110px;background:linear-gradient(180deg,#FFB6CC,#F48FB1);color:#fff;padding:8px 10px;border-radius:14px 14px 6px 14px;font-weight:900;font-size:13px;box-shadow:0 8px 16px rgba(244,143,177,.2)}
+.flag:before{content:"";position:absolute;left:-8px;bottom:-16px;width:4px;height:32px;background:#9AC8FF;border-radius:999px}
+.features{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.feature{
+  background:rgba(255,255,255,.86);padding:14px 10px;border-radius:24px;box-shadow:var(--shadow);text-align:center;border:1px solid rgba(255,255,255,.85);position:relative
+}
+.feature::after{content:"✨";position:absolute;right:10px;top:8px;font-size:12px;opacity:.45}
+.feature .ico{width:40px;height:40px;background:linear-gradient(180deg,#FFF9C4,#FFF4DA);border-radius:16px;display:grid;place-items:center;margin:0 auto 8px;font-size:18px;color:var(--green-deep);box-shadow:0 5px 10px rgba(0,0,0,.03)}
+.feature h3{margin:0;font-size:14px;color:var(--green-deep)}
+.feature p{margin:6px 0 0;font-size:12px;line-height:1.48;color:var(--text);font-weight:700}
+.section{margin-top:16px;padding:16px 14px 18px}
+.sectionHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.sectionHead h2{margin:0;font-size:18px;color:var(--green-deep)}
+.link{font-size:14px;color:#86AE7A;font-weight:900}
+.cityGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cityMini{
+  height:90px;border-radius:24px;position:relative;display:flex;align-items:flex-end;padding:10px;color:#fff;font-weight:900;overflow:hidden;box-shadow:var(--shadow)
+}
+.cityMini:nth-child(1){background:linear-gradient(135deg,#C8E7BB,#85BCD7)}
+.cityMini:nth-child(2){background:linear-gradient(135deg,#BCEFFF,#92D8F2)}
+.cityMini:nth-child(3){background:linear-gradient(135deg,#D8F1BF,#A5D6A7)}
+.cityMini:before{content:"";position:absolute;inset:auto 0 0 0;height:34px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.18))}
+.cityMini:after{content:"🍙";position:absolute;right:8px;top:8px;font-size:13px;opacity:.75}
+.cityMini span{position:relative;z-index:1}
+.bonus{
+  margin-top:14px;border-radius:26px;padding:14px;background:linear-gradient(135deg,#FFF9DA,#FFFCF0 55%,#F7FFF4);
+  border:1px solid rgba(255,255,255,.9);display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)
+}
+.bonus .txt{font-size:22px;font-weight:900;line-height:1.1;color:var(--green-deep)}
+.bonus .small{font-size:13px;color:var(--text);font-weight:750;margin-top:4px}
+.bonus .gift{margin-left:auto;font-size:34px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.06))}
+.card{padding:22px 16px;margin-top:16px}
+.card h2{margin:12px 0 10px;font-size:30px;line-height:1.2;letter-spacing:-.5px;color:var(--green-deep)}
+.card p{margin:0 0 16px;color:var(--text);font-size:15px;line-height:1.72;font-weight:760}
+.regionList,.options{display:grid;gap:12px}
+.regionBtn,.optionBtn{
+  width:100%;text-align:left;border:1.5px solid rgba(255,255,255,.85);background:linear-gradient(180deg,#fffef9,#fff);
+  padding:16px 14px;border-radius:26px;box-shadow:var(--shadow);position:relative
+}
+.regionBtn{display:flex;gap:12px;align-items:flex-start}
+.regionBtn::after,.optionBtn::after{content:"🍙";position:absolute;right:12px;top:12px;font-size:12px;opacity:.28}
+.regionIcon{width:44px;height:44px;background:linear-gradient(180deg,#FFF9C4,#FFF5DD);border-radius:18px;display:grid;place-items:center;font-size:22px;flex:0 0 44px;box-shadow:0 6px 10px rgba(0,0,0,.03)}
+.regionTitle{margin:0;font-size:18px;font-weight:900;color:var(--green-deep)}
+.regionDesc{margin:5px 0 0;font-size:13px;line-height:1.5;color:var(--text);font-weight:700}
+.btnGhost{
+  width:100%;padding:13px 14px 13px 48px;border-radius:24px;border:2px solid rgba(106,166,110,.18);
+  background:linear-gradient(180deg,#fffef9,#fff);color:var(--green-deep);font-size:16px;position:relative;box-shadow:var(--shadow);margin-top:14px
+}
+.btnGhost::before{content:"☁️";position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:20px}
+.quizHead{display:flex;justify-content:space-between;align-items:center;margin:14px 0 10px}
+.btnMini{
+  border:0;background:linear-gradient(180deg,#fffef8,#fff);color:var(--green-deep);padding:11px 16px;border-radius:22px;font-size:15px;box-shadow:var(--shadow)
+}
+.count{background:linear-gradient(180deg,#fffef8,#fff);padding:9px 13px;border-radius:999px;font-size:14px;font-weight:900;color:var(--green-deep);box-shadow:var(--shadow)}
+.progress{height:10px;background:rgba(255,255,255,.86);border-radius:999px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.04)}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#C6E8A1,#9ED59A,#88C686);border-radius:999px;transition:width .25s}
+.questionTitle{color:var(--green-deep)}
+.optionBtn .t{display:block;font-size:17px;font-weight:900;color:var(--green-deep);margin-bottom:5px;padding-right:20px}
+.optionBtn .d{display:block;font-size:13px;line-height:1.58;color:var(--text);font-weight:700;padding-right:26px}
+.quizArt{
+  margin-top:14px;height:120px;border-radius:26px;background:linear-gradient(135deg,#FFFDF1,#F7FFF5 50%,#FFF1F7);
+  position:relative;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.7)
+}
+.quizArt::before{content:"✨";position:absolute;left:46px;top:18px;font-size:14px;opacity:.35}
+.quizArt .wave{position:absolute;left:-8px;right:-8px;bottom:0;height:52px;background:linear-gradient(180deg,#D9F6FF,#A7E8F8 55%,#8DDCEC);border-radius:36px 36px 0 0}
+.quizArt .boat{position:absolute;right:24px;bottom:20px;width:122px;height:54px;background:linear-gradient(180deg,#FFD190,#FFBD6A);border-radius:12px 12px 22px 26px;transform:skewX(-12deg)}
+.quizArt .head{position:absolute;right:110px;bottom:50px;width:44px;height:32px;background:linear-gradient(145deg,#9AD79A 0 52%,#FFF1AA 52% 68%,#FFBE88 68%);border-radius:40% 56% 48% 44%}
+.quizArt .sun2{position:absolute;left:14px;top:12px;width:24px;height:24px;border-radius:50%;box-shadow:inset 0 0 0 5px var(--yellow),0 0 0 7px rgba(255,249,196,.6)}
+.resultCard{padding:22px 16px;margin-top:16px}
+.resultCity{font-size:34px;color:var(--green-deep);font-weight:900;letter-spacing:-1px;margin:8px 0 0}
+.resultLabel,.originTag,.pill{display:inline-block;border-radius:999px;padding:8px 12px;font-size:14px;font-weight:900}
+.resultLabel{margin-top:12px;background:linear-gradient(180deg,#FFF9DA,#fffef8);border:1px solid rgba(255,183,77,.18);color:#8C9955}
+.originTag{margin-top:10px;background:#FFF1F7;border:1px solid rgba(244,143,177,.16);color:#BA7290;font-size:13px}
+.quote{
+  margin-top:14px;padding:16px 14px;border-radius:26px;background:linear-gradient(135deg,#FFF9DE,#fff 50%,#F7FFF5);
+  border:1px solid rgba(255,255,255,.88);font-size:19px;line-height:1.62;font-weight:900;color:var(--green-deep);box-shadow:var(--shadow)
+}
+.block{margin-top:14px;padding:14px;border-radius:24px;border:1px solid rgba(255,255,255,.85);background:rgba(255,255,255,.78);box-shadow:var(--shadow)}
+.soft{background:linear-gradient(135deg,#F4FFF2,#fff)}
+.warm{background:linear-gradient(135deg,#FFF9E2,#fff)}
+.block h3{margin:0 0 8px;font-size:17px;color:var(--green-deep)}
+.block p{margin:0;font-size:15px;line-height:1.76;color:var(--text);font-weight:760}
+.list{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.list li{background:#fff;border:1px solid rgba(255,255,255,.88);padding:11px 12px;border-radius:18px;font-size:14px;line-height:1.58;color:var(--text-deep);font-weight:760;box-shadow:0 6px 12px rgba(0,0,0,.03)}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.pill{background:linear-gradient(180deg,#fffef9,#fff);border:1px solid rgba(255,255,255,.86);font-size:13px;color:#6A7D68;padding:8px 11px;box-shadow:0 4px 8px rgba(0,0,0,.03)}
+.shareBox{
+  margin-top:14px;background:linear-gradient(135deg,#FFF1F7,#fff 45%,#FFF9DE);padding:14px;border-radius:24px;border:1px solid rgba(255,255,255,.88);
+  font-size:14px;line-height:1.66;color:var(--text-deep);font-weight:760;box-shadow:var(--shadow)
+}
+.actions{display:grid;gap:10px;margin-top:18px}
+.actionBtn{border:0;border-radius:24px;padding:14px 16px;font-size:17px;font-weight:900;position:relative;box-shadow:var(--shadow)}
+.fill{background:linear-gradient(180deg,#FFC46F,#FFB74D 60%,#F7A53C 100%);color:#fff;padding-left:50px}
+.fill::before{content:"🍙";position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:20px}
+.ghost{background:linear-gradient(180deg,#fffef9,#fff);color:var(--green-deep);border:2px solid rgba(106,166,110,.18);padding-left:50px}
+.ghost::before{content:"🐲";position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:20px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);opacity:0;background:rgba(255,252,248,.98);color:var(--green-deep);padding:10px 16px;border-radius:999px;font-size:13px;font-weight:900;transition:.25s;pointer-events:none;z-index:9;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.9)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (max-width:390px){
+  .page{padding:12px 12px 30px}
+  h1{font-size:38px}
+  .heroLayout{grid-template-columns:1fr}
+  .illustration{height:220px}
+  .features{grid-template-columns:1fr}
+  .btnPrimary{font-size:24px}
+  .card h2{font-size:28px}
+  .questionTitle{font-size:26px}
+  .resultCity{font-size:30px}
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="cloud"></div><div class="cloud2"></div><div class="leaf a"></div><div class="leaf b"></div><div class="leaf c"></div>
+
+  <section id="homePage" class="page active">
+    <div class="topbar"><div class="brand"><div class="logo"></div><span>端午旅行测一测</span></div><div class="icons"><div class="search"></div><div class="menu"><i></i><i></i><i></i></div></div></div>
+    <div class="heroCard">
+      <div class="kicker">端午限定 · 精细测试版</div>
+      <div class="heroLayout">
+        <div>
+          <h1>端午你适合<span class="blk">去哪旅游？</span></h1>
+          <p class="sub"><strong>8 道题，1 分钟</strong>，结合出发地、天气接受度、预算和旅行气质，测出更适合你的端午城市。</p>
+          <div class="chips"><span class="chip">🎏 节日限定</span><span class="chip">🧭 城市推荐</span><span class="chip">🌿 精致 Q 版</span></div>
+        </div>
+        <div class="illustration" aria-hidden="true">
+          <div class="badge">出发吧！</div><div class="sun"></div><div class="plane">✈️</div><div class="balloon"></div><div class="mountain"></div><div class="sea"></div><div class="boatBody"></div><div class="neck"></div><div class="dragon"></div><div class="horns"></div><div class="zong z1"><div class="f">^o^</div></div><div class="zong z2"><div class="f">⌐■</div></div><div class="zong z3"><div class="f">^^</div></div><div class="flag">出发吧！</div>
+        </div>
+      </div>
+      <div class="cta"><button id="startBtn" class="btnPrimary">立即开始测试 <span>›</span></button><button id="hotBtn" class="btnSecondary">先看看热门城市 ›</button></div>
+    </div>
+    <div class="features">
+      <div class="feature"><div class="ico">👤</div><h3>看旅行气质</h3><p>你更适合慢游、热闹、文化感，还是清爽放空。</p></div>
+      <div class="feature"><div class="ico">⛅</div><h3>看天气接受度</h3><p>不是单纯看晴天雨天，而是看你最怕哪种天气体验。</p></div>
+      <div class="feature"><div class="ico">🧳</div><h3>看预算与距离</h3><p>先选出发地，再判断短途、中程还是远一点更适合你。</p></div>
+    </div>
+    <div class="section heroCard" id="hotCities">
+      <div class="sectionHead"><h2>🔥 热门城市</h2><span class="link">更多灵感</span></div>
+      <div class="cityGrid"><div class="cityMini"><span>📍杭州</span></div><div class="cityMini"><span>📍青岛</span></div><div class="cityMini"><span>📍成都</span></div></div>
+      <div class="bonus"><div><div class="txt">测完还有惊喜彩蛋！</div><div class="small">结果页会给你相似城市和一句适合直接分享的测试文案。</div></div><div class="gift">🎁</div></div>
+    </div>
+  </section>
+
+  <section id="originPage" class="page">
+    <div class="topbar"><div class="brand"><div class="logo"></div><span>先选出发地</span></div><div class="icons"><div class="menu"><i></i><i></i><i></i></div></div></div>
+    <div class="card"><div class="kicker">第 0 步 · 让推荐更现实</div><h2>你大概从哪里出发？</h2><p>不用精确定位，只选一个大区就行。我们会把距离和预算一起考虑，避免推荐出“喜欢但不现实”的目的地。</p><div id="regionList" class="regionList"></div><button id="backHomeBtn" class="btnGhost">返回首页</button></div>
+  </section>
+
+  <section id="quizPage" class="page">
+    <div class="topbar"><div class="brand"><div class="logo"></div><span>端午旅行测一测</span></div><div class="icons"><div class="menu"><i></i><i></i><i></i></div></div></div>
+    <div class="quizHead"><button id="prevBtn" class="btnMini">‹ 上一题</button><div id="qCount" class="count">1 / 8</div></div>
+    <div class="progress"><i id="progressBar"></i></div>
+    <div class="card"><div id="qKicker" class="kicker">第 1 题</div><h2 id="qTitle" class="questionTitle"></h2><p id="qSubtitle"></p><div id="options" class="options"></div><div class="quizArt"><div class="sun2"></div><div class="wave"></div><div class="head"></div><div class="boat"></div></div></div>
+  </section>
+
+  <section id="resultPage" class="page">
+    <div class="topbar"><div class="brand"><div class="logo"></div><span>测试结果</span></div><div class="icons"><div class="menu"><i></i><i></i><i></i></div></div></div>
+    <div id="resultContent" class="resultCard"></div>
+  </section>
+
+  <div id="toast" class="toast">已复制分享文案</div>
+</div>
+<script>
+const cities = ["汨罗","嘉兴","杭州","苏州","青岛","威海","厦门","泉州","成都","长沙","重庆","西安","昆明","贵阳","张家界","承德"];
+const regions = {
+  "华东":{icon:"🌊",desc:"上海 / 江苏 / 浙江 / 安徽 / 福建 / 江西 / 山东",base:{"杭州":3,"苏州":3,"嘉兴":4,"青岛":2,"泉州":2,"厦门":1},near:["杭州","苏州","嘉兴","青岛","泉州","厦门"],mid:["西安","长沙","承德"]},
+  "华南":{icon:"🌴",desc:"广东 / 广西 / 海南",base:{"厦门":3,"泉州":3,"长沙":2,"贵阳":2,"汨罗":1,"重庆":1},near:["厦门","泉州","长沙","贵阳","汨罗"],mid:["成都","重庆","昆明"]},
+  "华中":{icon:"🎏",desc:"河南 / 湖北 / 湖南",base:{"汨罗":4,"长沙":4,"张家界":3,"西安":2,"贵阳":2},near:["汨罗","长沙","张家界","西安","贵阳"],mid:["重庆","成都","嘉兴"]},
+  "华北":{icon:"🏯",desc:"北京 / 天津 / 河北 / 山西 / 内蒙古",base:{"承德":5,"青岛":2,"威海":2,"西安":2},near:["承德","青岛","威海","西安"],mid:["杭州","苏州","嘉兴"]},
+  "西南":{icon:"🌶️",desc:"重庆 / 四川 / 贵州 / 云南 / 西藏",base:{"成都":4,"重庆":4,"贵阳":4,"昆明":4,"张家界":2},near:["成都","重庆","贵阳","昆明","张家界"],mid:["西安","长沙","厦门"]},
+  "西北":{icon:"🏜️",desc:"陕西 / 甘肃 / 青海 / 宁夏 / 新疆",base:{"西安":5,"承德":2,"成都":2},near:["西安","承德","成都"],mid:["重庆","青岛","昆明"]},
+  "东北":{icon:"❄️",desc:"辽宁 / 吉林 / 黑龙江",base:{"威海":3,"青岛":2,"承德":3},near:["威海","青岛","承德"],mid:["杭州","西安","苏州"]},
+  "暂不选择":{icon:"✨",desc:"先只按偏好测试，不额外考虑出发地",base:{},near:[],mid:[]}
+};
+const questions = [
+  {k:"旅行期待",title:"这个端午，你最想得到哪种假期感觉？",subtitle:"先别想具体景点，想一想你最希望从这趟旅行里带回什么。",options:[
+    {t:"节日感和城市故事",d:"想在真正有端午氛围、也有文化记忆点的地方过节。",score:{"汨罗":3,"嘉兴":3,"泉州":2,"西安":2,"杭州":1}},
+    {t:"舒服地慢下来",d:"风景要好，节奏不要太赶，最好能把状态慢慢放松下来。",score:{"杭州":3,"苏州":3,"威海":2,"昆明":2,"贵阳":2,"承德":1}},
+    {t:"热闹又有烟火气",d:"想边逛边吃，城市最好有活力，晚上也别太安静。",score:{"长沙":3,"成都":3,"重庆":2,"西安":2,"泉州":1}},
+    {t:"风景感很强的短逃离",d:"想明显换个环境，让自己一下子从日常里抽离出来。",score:{"张家界":3,"昆明":2,"厦门":2,"青岛":2,"威海":1}}
+  ]},
+  {k:"旅行节奏",title:"你更适合哪种旅行节奏？",subtitle:"同样是三天假期，有的人喜欢留白，有的人喜欢一路都有事做。",options:[
+    {t:"一天两三个安排就够了",d:"不想把每段时间都塞满，更想慢慢走进一座城市。",score:{"杭州":3,"苏州":3,"嘉兴":2,"威海":2,"泉州":2,"昆明":2}},
+    {t:"边走边吃边逛最快乐",d:"路线可以灵活一点，但整个过程一定要有烟火气。",score:{"成都":3,"长沙":3,"重庆":2,"西安":2,"青岛":1}},
+    {t:"有内容的充实行程",d:"可以稍微忙一点，只要这趟真的有看点、有记忆点。",score:{"汨罗":3,"西安":3,"张家界":2,"嘉兴":2,"承德":1}},
+    {t:"住得舒服最重要",d:"比起打卡数量，我更在意整体感受是不是轻松、不折腾。",score:{"威海":3,"昆明":3,"贵阳":3,"厦门":2,"杭州":1}}
+  ]},
+  {k:"天气接受度",title:"端午出行时，你最在意哪种天气体验？",subtitle:"有的人怕闷热，有的人怕连续下雨。真正影响旅行舒适度的，是你最受不了什么。",options:[
+    {t:"最怕闷热黏腻",d:"一出门就冒汗、整个人发粘，会明显影响我的旅行心情。",score:{"昆明":3,"贵阳":3,"威海":2,"承德":2,"青岛":1}},
+    {t:"最怕连续下雨",d:"风景再好，如果总是湿漉漉、行程被打断，我会有点扫兴。",score:{"西安":3,"承德":3,"威海":2,"青岛":1,"苏州":-1,"张家界":-1}},
+    {t:"只要别太极端就行",d:"我对天气比较随和，只要整体舒服、方便出行就可以。",score:{"杭州":2,"苏州":2,"成都":2,"泉州":2,"嘉兴":1,"长沙":1}},
+    {t:"我更在意有风景感的天气",d:"比起绝对舒适，我想要一出门就觉得‘这趟来对了’的氛围。",score:{"厦门":3,"青岛":2,"杭州":2,"张家界":2,"昆明":1}}
+  ]},
+  {k:"路程接受度",title:"这个端午，你能接受多远的旅行？",subtitle:"三天假期，目的地不能只看喜欢，也要看你愿不愿意把时间花在路上。",options:[
+    {t:"轻松短途就好",d:"最好 2 小时内到，不想把假期花太多在赶路上。",mode:"short"},
+    {t:"高铁 3—5 小时可以",d:"只要换一个城市的感觉足够明显，路上花一点时间也值得。",mode:"medium"},
+    {t:"半天路程也能接受",d:"只要目的地足够适合，路途稍远一点没关系。",mode:"long"},
+    {t:"飞机也可以",d:"远一点没问题，我更看重这趟旅行是不是很值得。",mode:"flight"}
+  ]},
+  {k:"预算态度",title:"这次旅行，你更接近哪种花费方式？",subtitle:"预算不是限制快乐，而是在告诉我们，你更适合怎样的打开方式。",options:[
+    {t:"性价比优先",d:"不用太贵，吃住舒服、体验完整就可以。",score:{"嘉兴":3,"泉州":3,"贵阳":2,"长沙":2,"西安":2,"承德":2}},
+    {t:"中等舒适",d:"可以花一点钱，但希望整体稳妥、住得舒服、交通别太折腾。",score:{"杭州":2,"苏州":2,"青岛":2,"成都":2,"厦门":1,"威海":1}},
+    {t:"体验优先",d:"愿意为好风景、好住宿或更完整的体验多花一点。",score:{"昆明":2,"张家界":3,"厦门":2,"杭州":2,"青岛":1,"重庆":1}},
+    {t:"看心情消费",d:"预算不是最主要的判断标准，关键是这趟值不值得。",score:{"成都":2,"重庆":2,"长沙":2,"厦门":1,"青岛":1,"汨罗":1}}
+  ]},
+  {k:"人流偏好",title:"你对‘人多’这件事的接受度更像哪一种？",subtitle:"有的人觉得热闹才有假期感，有的人只想避开拥挤。",options:[
+    {t:"热闹一点才有氛围",d:"人多我能接受，甚至会觉得城市更有生命力。",score:{"长沙":3,"重庆":3,"成都":2,"西安":2}},
+    {t:"热门可以，但别太挤",d:"我不排斥人气城市，只是不想全程都在排队。",score:{"杭州":2,"青岛":2,"厦门":2,"泉州":2}},
+    {t:"舒服就好，不想太吵",d:"我更偏向节奏平稳一点的地方，人流别太密集。",score:{"威海":3,"苏州":2,"嘉兴":2,"昆明":2,"贵阳":2}},
+    {t:"最好安静一点",d:"如果能避开人潮，我会明显更享受这趟旅行。",score:{"承德":3,"威海":2,"昆明":2,"贵阳":2,"张家界":1}}
+  ]},
+  {k:"同行状态",title:"这趟旅行里，你更希望同行关系是什么样的？",subtitle:"这题测的不是‘跟谁去’，而是你更需要一种什么样的相处氛围。",options:[
+    {t:"一起聊天吃东西，气氛最重要",d:"希望彼此都很放松，不用太讲究计划，开心最重要。",score:{"成都":3,"长沙":3,"重庆":2,"青岛":1}},
+    {t:"一起慢慢逛，谁也别太赶",d:"更想要一种舒服、默契、可以随时停下来的节奏。",score:{"杭州":3,"苏州":3,"威海":2,"昆明":2,"泉州":1}},
+    {t:"一起体验点有内容的东西",d:"最好这趟不只是放松，还能看见一些值得聊的东西。",score:{"汨罗":3,"西安":3,"嘉兴":2,"泉州":2,"张家界":1}},
+    {t:"一个人也能舒服，和谁去都行",d:"我对旅行同伴没有太强依赖，更在意目的地本身是否适合我。",score:{"威海":2,"昆明":3,"贵阳":2,"承德":2,"杭州":1}}
+  ]},
+  {k:"想带回的记忆",title:"如果这趟端午只能带回一种旅行记忆，你更想要哪一种？",subtitle:"最后一道题，会帮我们判断你真正看重的旅行价值感。",options:[
+    {t:"一段和节日有关的记忆",d:"最好这趟旅行真的和端午有点关系，而不只是刚好放假出去玩。",score:{"汨罗":3,"嘉兴":3,"泉州":2,"西安":2,"杭州":1}},
+    {t:"一组很好看的风景照片",d:"我希望这趟旅行有明显的景色和画面感，看了就会想记住。",score:{"厦门":3,"青岛":2,"杭州":2,"张家界":2,"苏州":1}},
+    {t:"一顿又一顿好吃的",d:"说到底，能让我记住一座城市的，往往还是它的味道。",score:{"成都":3,"长沙":3,"重庆":2,"西安":2,"泉州":1}},
+    {t:"一种整个人松下来的感觉",d:"比起热闹和刺激，我更想带走一份情绪上的放松。",score:{"威海":3,"昆明":3,"贵阳":2,"承德":2,"杭州":1}}
+  ]}
+];
+const results = {
+  "汨罗":{label:"端午仪式感守护者",quote:"你不是单纯想出去玩，而是想在这个假期里，真正感受到‘端午’这两个字的分量。",intro:"你对节日是有感知力的人。比起只是换个地方逛一逛，你更容易被传统、民俗、故事和现场氛围打动。对你来说，一趟好的端午旅行，不只是轻松，也要有一点被记住的意义。",reason:"你的答案说明，你很在意旅行里的来处感。你会自然地被龙舟、地方习俗、屈原故事和人们共同参与的节日现场吸引。汨罗适合你，不是因为它最热闹，而是因为它能把端午从‘一个假期’变成‘一个真正的节日时刻’。",plays:["把端午民俗活动作为核心行程，不要只把它当成顺路看看。","留一点时间去理解屈原和当地故事，这会让你的感受更完整。","和家人或朋友一起去，会让节日氛围更容易沉淀成共同记忆。"],tip:"建议提前查好活动时间和人流情况，选择重点体验，不用一味赶行程。",with:["家人","朋友","文化兴趣者"],similar:["嘉兴","宜昌","佛山"],share:"我测出来是汨罗型：对我来说，端午不是只放假，而是想认真过一次节。"},
+  "嘉兴":{label:"粽香江南生活家",quote:"你喜欢的不是喧闹，而是那种把节日、生活和城市气质自然揉在一起的感觉。",intro:"你适合那种看起来不张扬，却越走越有味道的城市。嘉兴对你来说，不只是‘粽子很有名’，而是一座能把端午过得既有节日感、又有江南生活气的地方。",reason:"你的答案显示，你并不执着于最刺激的体验，你更看重一座城市是否温和、好逛、有点文化感，又不会让人太累。嘉兴的好，恰恰在于它能给你一种‘端午原来可以过得这么刚刚好’的感觉。",plays:["把古镇、水边散步和端午相关体验结合在一起，不用刻意追求很满的行程。","可以找一点和粽子、运河或地方节俗有关的内容，增加旅行记忆点。","留一点时间吃饭、散步、看水景，你会更喜欢它。"],tip:"嘉兴更适合慢慢感受，别把它做成纯打卡型路线。",with:["朋友","家人","情侣"],similar:["杭州","苏州","湖州"],share:"我测出来是嘉兴型：想把端午过得有味道，也想在江南的慢节奏里放松下来。"},
+  "杭州":{label:"江南松弛感收藏家",quote:"你不需要假期特别轰轰烈烈，你只是想去一个能让自己慢慢松下来的地方。",intro:"对你来说，舒服不是‘什么都不做’，而是在一个有风景、有气质、也有生活感的城市里，把节奏重新调回自己喜欢的样子。杭州很适合你，因为它既温柔，又不会空。",reason:"你的回答说明，你更偏好留白感和慢节奏。你不是非要去最热闹的地方，也不想让自己一直赶路。你更适合在湖边、树荫、街巷和咖啡香里，把端午过成一种轻松的暂停。杭州的魅力，正在于它懂得如何让人慢下来。",plays:["上午去湖边散步，别急着安排太多景点。","下午找一家茶馆、咖啡店或安静小馆坐一坐。","傍晚再去街区慢慢逛，让这趟旅行留一点呼吸感。"],tip:"杭州热门区域会比较集中，行程可以尽量‘少而精’。",with:["情侣","朋友","一个人","家人"],similar:["苏州","嘉兴","扬州"],share:"我测出来是杭州型：比起赶路，我更适合在有风景和生活感的地方慢慢放松。"},
+  "苏州":{label:"古城审美漫游者",quote:"你适合的旅行，不是刷景点数量，而是走进一座有细节、有气质、越看越顺眼的城市。",intro:"你对环境的敏感度比较高。你会在意街巷是不是舒服、城市有没有层次、走着走着能不能产生一种‘这里真耐看’的感觉。苏州对你来说，是一种慢慢渗透进来的喜欢。",reason:"你的结果说明，你更偏向温柔、细致、节奏适中的旅行体验。你不追求轰烈，也不太需要过度刺激。园林、水巷、老城纹理和适合步行的节奏，会让你觉得这趟旅行既舒服，又有审美上的满足。",plays:["不必把所有园林都排进计划，选一两个真正想看的就够。","古城和水巷更适合慢慢走，而不是快进式打卡。","可以把一部分时间留给发呆和闲逛，苏州的魅力常在这些时刻里。"],tip:"适合‘少点安排，多点停留’，这样更容易感受到它的气质。",with:["朋友","情侣","一个人"],similar:["杭州","嘉兴","绍兴"],share:"我测出来是苏州型：想去一个看起来舒服、走起来也很顺眼的古城慢慢逛。"},
+  "青岛":{label:"海风清爽放空派",quote:"你不是单纯想看海，而是想去一个既有海风、又有城市感，还不会太沉闷的地方。",intro:"你想要的旅行，多半不是全程密集打卡，而是一种被海风轻轻托住的感觉。青岛适合你，是因为它在风景和城市生活之间，找到了一个比较舒服的平衡。",reason:"你的答案说明，你喜欢有一点风景感，也需要一点松弛感，但你并不是完全想躲进安静里。你希望城市有内容、有点活力，走累了还能吃东西、看海、散步。青岛适合这样的你，但这一次它不再是‘万能答案’，而是真正适合想要海边城市感的人。",plays:["海边不要排太多景点，选一个舒服的时段去吹风就很好。","可以把老城区、街区散步和吃饭安排在同一天里，感受城市层次。","傍晚的海边和夜里的城市街道，会比正午更适合你。"],tip:"海边热门区域容易集中人流，避开高峰时段会更舒服。",with:["朋友","情侣","家人"],similar:["威海","烟台","大连"],share:"我测出来是青岛型：我需要的不是热到冒汗的假期，而是一座有风、有海、也有生活感的城市。"},
+  "威海":{label:"低压力看海治愈派",quote:"你喜欢看海，但比起热闹，你更在意那份安静、清爽和不被打扰的舒服。",intro:"你是那种对假期质量很有感觉的人。人太多、节奏太赶、天气太闷，都会直接影响你的心情。威海适合你，因为它把‘看海’这件事，做得更温和、更低压，也更适合真正想放松的人。",reason:"你的答案说明，你对人流和天气都比较敏感，希望旅行是治愈的，而不是消耗的。你不一定要最热门，但一定要够舒服。威海的气质比较克制，不会太吵，却很适合把假期过成一段安安静静的恢复时间。",plays:["挑一段海边散步，而不是追着所有海景点跑。","把行程做得宽松一点，留时间发呆、看海、慢慢吃饭。","如果同行的人也喜欢安静，你会更享受这座城市。"],tip:"适合想恢复状态的人，不建议排得太满。",with:["一个人","情侣","朋友"],similar:["青岛","承德","烟台"],share:"我测出来是威海型：我想看的不是热闹，而是一种真正能让人放松下来的海边生活感。"},
+  "厦门":{label:"海边文艺出片家",quote:"你期待的旅行，最好既有风景，也有氛围，走出去就能感到‘这一趟很好看’。",intro:"你对旅行里的画面感很敏锐。你会在意街道、颜色、海边、建筑和整体氛围是否让人想拍下来、想记住。厦门适合你，因为它是少数能把轻松感和风景感一起提供的海边城市。",reason:"从你的答案看，你不只是想舒服，也想有点浪漫、有点灵气、有点适合记录的瞬间。比起完全安静的小城，你会更喜欢既能散步、又有海边和街区氛围的地方。厦门恰好能把‘轻松’和‘好看’放在一起。",plays:["把散步和拍照当成主要行程，而不是配角。","比起赶很多地方，更适合选几个自己真的想待的街区。","如果天气舒服，清晨和傍晚通常会是你最喜欢的时段。"],tip:"热门区域会有一定人流，建议把路线拉开，不要集中在一条线。",with:["情侣","朋友","闺蜜","一个人"],similar:["青岛","泉州","大理"],share:"我测出来是厦门型：我想要的是一种既轻松又有画面感的端午旅行。"},
+  "泉州":{label:"小众文化发现家",quote:"你适合去一座有故事、有生活感、越走越能发现细节的城市。",intro:"你不是那种会被纯粹的热闹轻易打动的人。你更喜欢城市里那些真正有纹理的部分：街巷、老建筑、在地生活、传统和烟火气混在一起的感觉。泉州很适合这样的你。",reason:"你的结果说明，你会在意一座城市有没有独特性。你不一定非要大热门，但一定希望它值得被认真逛。泉州的魅力，就在于它既不冷，也不吵，它会让你在走走停停之间，自然地产生一种‘这座城市真有自己的性格’的感觉。",plays:["把逛街巷和吃当地东西作为旅行核心，会比纯景点更适合你。","适合边走边观察城市细节，而不是一路赶时间。","如果你喜欢小众文化感，这里会很对你的胃口。"],tip:"不用安排太多景点，重点在‘走进去’，而不是‘看完它’。",with:["朋友","一个人","文化爱好者"],similar:["嘉兴","苏州","福州"],share:"我测出来是泉州型：我喜欢有生活感、有文化味、越逛越耐看的城市。"},
+  "成都":{label:"松弛吃喝生活家",quote:"你并不是懒，你只是很清楚：一趟舒服的旅行，不一定要把自己累得像在赶任务。",intro:"你需要的是那种一落地就能慢下来的城市。它最好好吃、好逛、有人情味，也不会逼着你一直跑。成都适合你，因为它懂得什么叫‘舒服地过日子’，也懂得怎么把这种舒服分享给来的人。",reason:"你的答案说明，你很在意旅行中的松弛感和烟火气。你可以接受热闹，但前提是这份热闹是舒服的、可参与的，而不是紧绷的。成都的节奏、美食、街头氛围和‘不着急’的城市气质，会让你很有共鸣。",plays:["别把行程排满，给吃饭和坐着聊天留足空间。","可以把一个街区逛透，而不是一天横跨很多地方。","和朋友一起去会很好玩，但一个人去也不会无聊。"],tip:"成都适合‘慢慢吃、慢慢走、慢慢感受’，越放松越对味。",with:["朋友","同学","情侣","一个人"],similar:["长沙","重庆","贵阳"],share:"我测出来是成都型：我需要的不是冲刺式旅行，而是一座能让我自然慢下来的城市。"},
+  "长沙":{label:"快乐干饭冒险家",quote:"你的假期不太适合太安静，真正能让你开心的，是热闹、好吃和充满活力的城市现场。",intro:"你对旅行的期待里，有很强的参与感。你想边逛边吃，想感受城市情绪，想在夜晚依然有东西可玩。长沙适合你，因为它会把快乐表达得很直接。",reason:"从你的回答看，你需要的不是纯休息，而是‘活起来’。你会被热闹的街头、夜晚的氛围、好吃的小店和年轻的城市节奏吸引。长沙可能不是最安静的地方，但它足够有生命力，而这恰好是你想要的。",plays:["白天可以轻松一点，真正的重点放在晚上的烟火气里。","把‘吃什么’当成行程主线，你会更有幸福感。","适合和朋友一起去，大家互相带动气氛会更好玩。"],tip:"如果怕太累，记得控制打卡密度，把重点留给真正想吃想去的地方。",with:["朋友","同学","小团体"],similar:["成都","重庆","武汉"],share:"我测出来是长沙型：我的端午需要一点热闹、很多好吃的，还有随时能被点亮的好心情。"},
+  "重庆":{label:"山城热辣体验派",quote:"你想要的不是平平稳稳的旅行，而是一座能让感官一下子被点亮的城市。",intro:"你对旅行的期待，是有冲击感的。你并不怕起伏、热闹和立体感，反而会觉得这种有层次、有个性的地方更有意思。重庆适合你，因为它不是温吞的，而是非常有存在感。",reason:"你的结果说明，你可以接受一点热闹，也希望旅行有比较鲜明的记忆点。山城地形、夜景、美食和浓烈的城市气质，会让你觉得这趟不虚此行。它并不适合想彻底躺平的人，却很适合想在假期里‘醒一醒’的人。",plays:["把夜景和吃饭都当成重要内容，不必只围着白天打卡。","上坡下坡会比较多，路线别排太满。","和愿意一起冒险、一起吃东西的人同行，体验会更好。"],tip:"适合喜欢城市个性的人，行程上最好有取舍，别让自己太累。",with:["朋友","同学","情侣"],similar:["长沙","成都","西安"],share:"我测出来是重庆型：我喜欢有冲击感、有层次、让人一去就记住的城市。"},
+  "西安":{label:"历史副本探索者",quote:"你对旅行的满足感，很大一部分来自‘这座城市真的有东西可看、可想、可聊’。",intro:"你并不满足于纯粹放松型旅行。你喜欢一座城市有厚度、有故事，也喜欢在吃饭、散步、看展或看古迹的过程中，慢慢把它拼出来。西安适合你，因为它既有历史，也不缺日常烟火。",reason:"你的答案说明，你很在意内容感。你愿意为一座有重量的城市投入时间，也希望旅行回来之后，除了照片，还能带回一点真正记住的东西。西安刚好能满足这种需求：它有过去的层次，也有现在的生活气。",plays:["别只盯着热门打卡点，适当安排一点博物馆或街区，会更符合你。","美食和历史可以并行，这会让旅行更完整。","如果你喜欢‘边玩边聊边发现’，这里会很合适。"],tip:"适合有一点探索欲的人，做一点小攻略会提升体验。",with:["朋友","家人","文化爱好者"],similar:["汨罗","泉州","承德"],share:"我测出来是西安型：我希望一趟旅行不只是好玩，还要有内容、有记忆点。"},
+  "昆明":{label:"温柔气候疗愈者",quote:"你不是想逃离一切，你只是想去一个空气、温度和节奏都让人舒服一点的地方。",intro:"你对‘舒适’非常有感觉。天气太闷、人太多、节奏太快，都会直接消耗你。昆明适合你，因为它的优势恰恰不是刺激，而是稳定、松弛和对身心都更友好的环境。",reason:"你的答案说明，你很在意旅行是否真的能让自己恢复状态。你不追求最热闹，也不执着于一定要打卡很多地方。你更适合一座能让人慢慢舒展开来的城市。昆明的天气、植物感和整体节奏，会让你觉得端午终于像一个真正的休息时间。",plays:["别把路线安排得太密，舒服地走最适合你。","可以把城市散步、花市、公园或周边轻出游结合在一起。","如果你想把这趟过成‘恢复能量’，昆明会很合适。"],tip:"越少折腾、越留白，越能感受到它真正的治愈感。",with:["一个人","情侣","朋友"],similar:["贵阳","威海","承德"],share:"我测出来是昆明型：比起热闹，我更想在一个温度和节奏都舒服的城市里慢慢恢复状态。"},
+  "贵阳":{label:"清凉避暑生活家",quote:"你很清楚自己需要的不是刺激，而是一种舒服、清凉、不过度消耗的假期感。",intro:"你对天气和节奏都比较敏感，不太想让旅行变成新的负担。贵阳适合你，因为它没有那么大的压迫感，却能在清凉和城市生活之间给你一个平衡。",reason:"从你的答案看，你更倾向于一座让人呼吸顺一点、状态松一点的城市。你会在意舒服，也会在意性价比和现实可行性。贵阳的气候、节奏和整体旅行压力都比较友好，会让你更容易真正享受假期。",plays:["适合把‘慢节奏城市感’和一点点周边自然感结合在一起。","别急着塞满日程，给自己一点自由切换的空间。","如果同行人也喜欢舒服路线，这里会很契合。"],tip:"这是一种轻松型旅行，不用把它做成很高强度的挑战。",with:["朋友","一个人","家人"],similar:["昆明","成都","张家界"],share:"我测出来是贵阳型：我想要的是清爽、舒服、负担不大的端午旅行。"},
+  "张家界":{label:"山野能量探险者",quote:"你更容易被那种一眼就能感受到‘环境换了’的地方打动。",intro:"你对旅行的期待里，有一种很明确的‘切换感’。你不只是想散步、吃饭，你还想让自己看到一些真正有冲击力的风景，感受到一种从日常里跳出来的能量。张家界适合这样的你。",reason:"你的答案显示，你愿意为了有记忆点的自然景观，多走一点、多看一点。你不介意行程稍微充实一些，只要这趟足够值得。张家界不会太平淡，它更像一种‘重新唤醒感官’的旅行方式。",plays:["自然景观是重点，别用城市打卡思路安排这趟旅行。","行程可以充实，但一定要留出休息和调整体力的空间。","如果你喜欢‘这一趟真的有震撼感’，你会很适合这里。"],tip:"适合有精力、有风景需求的人，鞋子和体力安排会很重要。",with:["朋友","家人","拍照搭子"],similar:["昆明","贵阳","承德"],share:"我测出来是张家界型：我需要一趟能明显换环境、让自己重新被风景击中的旅行。"},
+  "承德":{label:"北方清爽慢游者",quote:"你喜欢的是一种不吵、不闷、不费力，却依然有内容感的假期。",intro:"你并不是追求‘什么都不做’，而是更喜欢在清爽、稳定、压力小的环境里，让自己慢慢恢复节奏。承德适合你，因为它既有一点人文底色，也有相对友好的气候和低压感。",reason:"你的结果说明，你不太适合高温、过度拥挤或过分热闹的路线。你更看重舒服、清爽、现实可行，也希望目的地多少有一些值得感受的内容。承德的节奏和气质，都比较符合这种不张扬却很稳当的期待。",plays:["适合慢慢走、慢慢看，不用拼命打卡。","可以把人文和避暑感结合在一起，路线会更完整。","如果你只是想轻轻松松过个假，这里会让你感觉很省心。"],tip:"更适合想躲开闷热和喧闹的人，轻量化行程会更舒服。",with:["家人","一个人","朋友"],similar:["威海","昆明","西安"],share:"我测出来是承德型：我需要的是一个清爽、稳定、让人不过度消耗的小长假目的地。"}
+};
+let selectedRegion = '';
+let current = 0;
+let answers = Array(questions.length).fill(null);
+const $ = id => document.getElementById(id);
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); $(id).classList.add('active'); window.scrollTo({top:0,behavior:'smooth'});}
+function renderRegions(){const list=$('regionList'); list.innerHTML=''; Object.entries(regions).forEach(([name,info])=>{const b=document.createElement('button'); b.className='regionBtn'; b.innerHTML=`<div class="regionIcon">${info.icon}</div><div><div class="regionTitle">${name}</div><div class="regionDesc">${info.desc}</div></div>`; b.onclick=()=>{selectedRegion=name; current=0; answers=Array(questions.length).fill(null); renderQuestion(); showPage('quizPage');}; list.appendChild(b);});}
+function renderQuestion(){const q=questions[current]; $('qCount').textContent=`${current+1} / ${questions.length}`; $('progressBar').style.width=`${((current+1)/questions.length)*100}%`; $('qKicker').textContent=`第 ${current+1} 题 · ${q.k}`; $('qTitle').textContent=q.title; $('qSubtitle').textContent=q.subtitle; $('prevBtn').style.visibility=current===0?'hidden':'visible'; $('options').innerHTML=''; q.options.forEach((o,i)=>{const b=document.createElement('button'); b.className='optionBtn'; b.innerHTML=`<span class="t">${o.t}</span><span class="d">${o.d}</span>`; b.onclick=()=>{answers[current]=i; if(current<questions.length-1){current++; renderQuestion();}else{renderResult(); showPage('resultPage');}}; $('options').appendChild(b);});}
+function addScores(total, map){if(!map) return; for(const [k,v] of Object.entries(map)){total[k]=(total[k]||0)+v;}}
+function computeScores(){const total=Object.fromEntries(cities.map(c=>[c,0])); const region=regions[selectedRegion]||regions['暂不选择']; addScores(total, region.base); answers.forEach((ans,idx)=>{if(ans===null) return; const o=questions[idx].options[ans]; if(o.score) addScores(total,o.score); if(o.mode){const near=new Set(region.near||[]); const mid=new Set(region.mid||[]); const far=cities.filter(c=>!near.has(c)&&!mid.has(c)); if(o.mode==='short'){cities.forEach(c=>{total[c]+= near.has(c)?3:(mid.has(c)?1:-1);});} if(o.mode==='medium'){cities.forEach(c=>{total[c]+= near.has(c)?2:(mid.has(c)?2:0);});} if(o.mode==='long'){cities.forEach(c=>{total[c]+= near.has(c)?1:(far.includes(c)?1:0);}); addScores(total,{"张家界":1,"昆明":1,"厦门":1,"重庆":1});} if(o.mode==='flight'){far.forEach(c=>total[c]+=2); addScores(total,{"张家界":1,"昆明":1,"厦门":1,"重庆":1});}}
+  });
+  // 控制青岛不过度泛化
+  const weather = answers[2], memory = answers[7], crowd = answers[5];
+  if(weather!==3 && memory!==1) total['青岛'] -= 1;
+  if(crowd===3) total['威海'] += 1;
+  if(memory===3) { total['昆明'] += 1; total['威海'] += 1; }
+  if(memory===2) { total['成都'] += 1; total['长沙'] += 1; }
+  if(memory===0) { total['汨罗'] += 1; total['嘉兴'] += 1; }
+  const ranked=Object.entries(total).sort((a,b)=>b[1]-a[1]); return ranked;
+}
+function renderResult(){const ranked=computeScores(); const city=ranked[0][0]; const r=results[city]; $('resultContent').innerHTML=`<div class="kicker">你的端午适配城市</div><div class="resultCity">${city}</div><div class="resultLabel">${r.label}</div><div class="originTag">你的出发地选择：${selectedRegion||'未选择'}</div><div class="quote">${r.quote}</div><div class="block warm"><h3>为什么这座城市会像你</h3><p>${r.intro}</p></div><div class="block soft"><h3>更具体一点地说</h3><p>${r.reason}</p></div><div class="block"><h3>端午这样玩会更适合你</h3><ul class="list">${r.plays.map(t=>`<li>${t}</li>`).join('')}</ul></div><div class="block"><h3>出行提醒</h3><p>${r.tip}</p></div><div class="block"><h3>适合和谁一起去</h3><div class="meta">${r.with.map(t=>`<span class="pill">${t}</span>`).join('')}</div></div><div class="block"><h3>如果你想换一个相似选择</h3><div class="meta">${r.similar.map(t=>`<span class="pill">${t}</span>`).join('')}</div></div><div class="shareBox"><strong>适合分享的一句话：</strong><br>${r.share}</div><div class="actions"><button id="shareBtn" class="actionBtn fill">复制分享文案</button><button id="restartBtn" class="actionBtn ghost">重新测试</button></div>`; $('shareBtn').onclick=()=>copyText(`我的端午适配城市是【${city}】——${r.share}`); $('restartBtn').onclick=()=>{selectedRegion=''; current=0; answers=Array(questions.length).fill(null); showPage('homePage');};}
+function copyText(text){if(navigator.clipboard){navigator.clipboard.writeText(text).then(showToast).catch(()=>fallbackCopy(text));}else{fallbackCopy(text);}} function fallbackCopy(text){const t=document.createElement('textarea'); t.value=text; document.body.appendChild(t); t.select(); try{document.execCommand('copy');}catch(e){} t.remove(); showToast();}
+function showToast(){const toast=$('toast'); toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1600);}
+$('startBtn').onclick=()=>showPage('originPage'); $('backHomeBtn').onclick=()=>showPage('homePage'); $('hotBtn').onclick=()=>$('hotCities').scrollIntoView({behavior:'smooth',block:'start'}); $('prevBtn').onclick=()=>{if(current===0){showPage('originPage'); return;} current--; renderQuestion();};
+renderRegions();
+</script>
+</body>
+</html>
